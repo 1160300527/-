@@ -11,12 +11,12 @@ public class test {
 	public static void main(String args[]) {
 		ReadFile read = new ReadFile();
 		read.readDictionary("lab/test/dict.txt");
-		List<String> content = read.readContent("lab/test/msr_testing.txt");
+		List<String> content = read.readContent("lab/test/all_testing.txt");
 		//System.out.println(content);
 		WordSegment seg = new WordSegment();
 		List<String> split = seg.Segment(content, read.getDictionary(),read.getLength());
-		new test().writeResult(split,"lab/test/msr_testing_result.txt");
-		seg.testSegment(split, read.getGoal("lab/test/msr_testing_gold.txt"));
+		new test().writeResult(split,"lab/test/all_testing_result.txt");
+		seg.testSegment(split, read.getGoal("lab/test/all_testing_goal.txt"));
 	}
 	
 	public void writeResult(List<String> content,String filePath) {
