@@ -14,6 +14,7 @@ public class WordSegment {
 		List<String>splitLines = new ArrayList<String>();
 		for(String line:content) {
 			splitLines.add(BM(line));
+			
 		}
 		return splitLines;
 	}
@@ -30,7 +31,6 @@ public class WordSegment {
 				index++;
 				continue;
 			}
-			//System.out.print(index);
 			length = contentLength-index>=maxLength ? maxLength : contentLength-index+1;
 			word = content.substring(index, index+length);
 			while(length>1) {
@@ -39,9 +39,8 @@ public class WordSegment {
 				length--;
 				word = content.substring(index, index+length);
 			}
-			//System.out.println(" "+length);
 			index+=length;
-			//split.append(word);
+			split.append(word);
 			if(word.equals("\r")||word.equals("\n")||word.equals(" ")||index>contentLength)
 				continue;
 			split.append("  ");
@@ -89,7 +88,7 @@ public class WordSegment {
 		int length1 = words1.length;
 		int length2 = words2.length;
 		if(length1!=length2) {
-			return length1>length2 ? split1 : split2;
+			return length1<length2 ? split1 : split2;
 		}
 		int single1=0,single2=0;
 		for(int i = 0; i < length1; i++) {
@@ -148,7 +147,7 @@ public class WordSegment {
 		}
 		float precision = (float)correct/result.size();
 		float recall = (float)correct/goal.size();
-		float F1score = 2*precision*recall/(2*precision+recall);
+		float F1score = 2*precision*recall/(precision+recall);
 		System.out.println("Precisn:"+precision);
 		System.out.println("Recall:"+recall);
 		System.out.println("F1-Score£º"+F1score);

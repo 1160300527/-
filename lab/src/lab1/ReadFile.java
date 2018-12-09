@@ -24,11 +24,15 @@ public class ReadFile {
 		File file = new File(filePath);
 		try {
 			FileInputStream reader = new FileInputStream(file);
-			BufferedReader buffer = new BufferedReader(new InputStreamReader(reader,"utf-8"));
+			BufferedReader buffer = new BufferedReader(new InputStreamReader(reader,"utf-8"));//指定文件格式
 			String word = "";
+			//buffer.read();//UTF8+BOM文件格式读取的第一个字符的ASCII码为65271
 			while((word=buffer.readLine())!=null) {
 				if(word.length()>maxLength) {
 					maxLength = word.length();
+				}
+				if(word.charAt(0)==65279) {//UTF8+BOM文件格式读取的第一个字符的ASCII码为65279 
+					word = word.substring(1);
 				}
 				dictionary.add(word);
 			}
@@ -48,8 +52,12 @@ public class ReadFile {
 		try {
 			FileInputStream reader = new FileInputStream(file);
 			BufferedReader buffer = new BufferedReader(new InputStreamReader(reader,"utf-8"));
-			String line = "";
+			String line = null;
+			//buffer.read();
 			while((line=buffer.readLine())!=null) {
+				if(line.charAt(0)==65279) {//UTF8+BOM文件格式读取的第一个字符的ASCII码为65279 
+					line = line.substring(1);
+				}
 				content.add(line);
 			}
 			buffer.close();
@@ -70,8 +78,11 @@ public class ReadFile {
 		try {
 			FileInputStream reader = new FileInputStream(file);
 			BufferedReader buffer = new BufferedReader(new InputStreamReader(reader,"utf-8"));
-			String line = "";
+			String line = null;
 			while((line=buffer.readLine())!=null) {
+				if(line.charAt(0)==65279) {//UTF8+BOM文件格式读取的第一个字符的ASCII码为65279 
+					line = line.substring(1);
+				}
 				goal.addAll(Arrays.asList(line.split("\\s+")));
 			}
 			buffer.close();

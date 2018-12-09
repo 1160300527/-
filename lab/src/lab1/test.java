@@ -10,13 +10,17 @@ import java.util.List;
 public class test {
 	public static void main(String args[]) {
 		ReadFile read = new ReadFile();
-		read.readDictionary("lab/test/dict.txt");
-		List<String> content = read.readContent("lab/test/all_testing.txt");
+		read.readDictionary("lab/dictionary/dict.txt");
+		String filename = "msr.txt";
+		List<String> content = read.readContent("lab/test/"+filename);
 		//System.out.println(content);
 		WordSegment seg = new WordSegment();
+		long start = System.currentTimeMillis();
 		List<String> split = seg.Segment(content, read.getDictionary(),read.getLength());
-		new test().writeResult(split,"lab/test/all_testing_result.txt");
-		seg.testSegment(split, read.getGoal("lab/test/all_testing_goal.txt"));
+		long end = System.currentTimeMillis();
+		System.out.println("cost time:"+(float)(end-start)/1000+"s");
+		new test().writeResult(split,"lab/result/"+filename);
+		seg.testSegment(split, read.getGoal("lab/goal/"+filename));
 	}
 	
 	public void writeResult(List<String> content,String filePath) {
